@@ -1,20 +1,11 @@
-from flask import Flask, request
-from flask_cors import CORS
 import numpy as np
 import cv2
 import runpod
 
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/camera', methods=['POST'])
-def receive_image():
-    try:
-        # Get image data from request
-        image_data = request.get_data()
-        
+def receive_image(image):
+    try:        
         # Convert to numpy array
-        nparr = np.frombuffer(image_data, np.uint8)
+        nparr = np.frombuffer(image, np.uint8)
         
         # Decode image
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -36,5 +27,4 @@ def handler(job):
 
 if __name__ == '__main__':
     runpod.serverless.start({"handler": handler})
-    app.run(host='0.0.0.0', port=9000)
 
