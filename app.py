@@ -25,6 +25,4 @@ def handler(job):
 
     return receive_image(camera_image)
 
-if __name__ == '__main__':
-    runpod.serverless.start({"handler": handler})
-
+runpod.serverless.start({"handler": handler})
